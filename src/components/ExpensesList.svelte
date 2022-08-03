@@ -7,7 +7,9 @@
     <SectionTitle title="Expenses List" />
     <ul>
         {#each expenses as expense}
-            <Expense  />
+            <Expense expense= {expense} />
+        {:else}
+            <h1>There is no data</h1>
         {/each}
     </ul>
 </section>
