@@ -2,12 +2,13 @@
     import SectionTitle from "./Title.svelte";
     import Expense from "./Expense.svelte";
     export let expenses = [];
+
 </script>
 <section>
     <SectionTitle title="Expenses List" />
     <ul>
-        {#each expenses as expense}
-            <Expense expense= {expense} />
+        {#each expenses as expense, index}
+            <Expense {...expense} />
         {:else}
             <h1>There is no data</h1>
         {/each}
