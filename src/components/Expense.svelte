@@ -4,7 +4,7 @@
     export let name='';
     export let amount = 0;
 
-    let displayAmount = true;
+    let displayAmount = false;
     function toggleAmount() {
         displayAmount = !displayAmount
     }
