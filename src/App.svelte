@@ -11,11 +11,14 @@
     console.log(expenses);
 
     // Functions
+    function removeExpense(id){
+        expenses = expenses.filter(item => item.id !== id)
+    }
 
 </script>
 <Navbar />
 <main class="content">
-    <ExpensesList {expenses} />
+    <ExpensesList {expenses} {removeExpense} />
 </main>
 
 
