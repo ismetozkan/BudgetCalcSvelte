@@ -5,6 +5,7 @@
 	import Navbar from "./components/Navbar.svelte";
     import ExpensesList from "./components/ExpensesList.svelte";
     import Total from "./components/Total.svelte";
+    import AddExpense from "./components/AddExpense.svelte";
     // Data
     import expensesData from "./expenses.js";
 
@@ -29,6 +30,7 @@
 </script>
 <Navbar />
 <main class="content">
+    <AddExpense />
     <Total title="Total Expenses" { total }/>
     <ExpensesList {expenses} />
 
