@@ -17,6 +17,14 @@
             preVal + currVal.amount, 0);
 
     // Functions
+    function addExpense({name, amount}) {
+        let newExpense = {
+        id: Math.random() * Date.now(),
+        name: name,
+        amount: amount
+        };
+        expenses = [newExpense,...expenses];
+    }
     function removeExpense(id){
         expenses = expenses.filter(item => item.id !== id)
     }
@@ -30,7 +38,7 @@
 </script>
 <Navbar />
 <main class="content">
-    <AddExpense />
+    <AddExpense {addExpense}/>
     <Total title="Total Expenses" { total }/>
     <ExpensesList {expenses} />
 
