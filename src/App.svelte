@@ -11,6 +11,11 @@
 
     // Variables
     let expenses = [...expensesData];
+    //Editing Variables
+    let editId = null;
+    let editName = '';
+    let editAmount = null;
+
     console.log(expenses);
         // sum values instantly
     $: total = expenses.reduce((preVal, currVal) =>
@@ -25,6 +30,18 @@
         };
         expenses = [newExpense,...expenses];
     }
+
+    function editExpense(id){
+        let expense = expenses.find(item => item.id === id);
+            console.log(expense);
+
+        editId = expense.id;
+        editName = expense.name;
+        editAmount = expense.amount;
+
+        console.log({editId, editName, editAmount});
+    }
+
     function removeExpense(id){
         expenses = expenses.filter(item => item.id !== id)
     }
@@ -35,6 +52,8 @@
     }
     // Context
     setContext('remove',removeExpense )
+    setContext('edit',editExpense )
+
 </script>
 <Navbar />
 <main class="content">
