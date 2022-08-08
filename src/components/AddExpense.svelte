@@ -1,5 +1,14 @@
 <script>
-    import Title from "./Title.svelte";
+    import Title from "./Title.svelte"
+
+    //import {onMount, onDestroy, beforeUpdate, afterUpdate} from 'svelte';
+    //onMount(() => {
+    //    console.log('the component has mounted');
+    //});
+    //onDestroy(() => {
+    //    console.log('the component has destroyed');
+    //});
+
     export let name = '';
     export let amount = null;
     export let addExpense;
@@ -8,7 +17,6 @@
     export let hideForm;
     //$: console.log({name, amount});
     $: isEmpty = !name || !amount;
-
 
     function handleSubmit(){
         if(isEditing){

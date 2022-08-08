@@ -1,5 +1,5 @@
 <script>
-    import {setContext} from 'svelte';
+    import {setContext, onMount, afterUpdate} from 'svelte';
 
     // Components
     import Navbar from "./components/Navbar.svelte";
@@ -7,10 +7,11 @@
     import Total from "./components/Total.svelte";
     import AddExpense from "./components/AddExpense.svelte";
     // Data
-    import expensesData from "./expenses.js";
+    //import expensesData from "./expenses.js";
+    //let expenses = [...expensesData];
 
     // Variables
-    let expenses = [...expensesData];
+    let expenses = [];
     let isFormOpen = false;
 
     //Editing Variables
@@ -79,12 +80,26 @@
     setContext('remove',removeExpense )
     setContext('modify',setModExpense )
 
+    //Local Storage
+    function setLocalStorage() {
+        localStorage.setItem('expenses',JSON.stringify(expenses));
+    }
+            //lifecycle functions
+    onMount(() => {
+       expenses = localStorage.getItem('expenses')
+        ? JSON.parse(localStorage.getItem('expenses'))
+        : [];
+    });
+    afterUpdate(() => {
+        console.log('updated');
+        setLocalStorage();
+    });
+
 </script>
 <Navbar {showForm} />
 <main class="content">
     {#if isFormOpen}
-    <AddExpense {addExpense}
-                name={setName} amount={setAmount}
+    <AddExpense {addExpense} name={setName} amount={setAmount}
                 {isEditing} {editExpense} {hideForm}/>
     {/if}
 
