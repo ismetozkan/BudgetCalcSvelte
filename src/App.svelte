@@ -11,6 +11,8 @@
 
     // Variables
     let expenses = [...expensesData];
+    let isFormOpen = false;
+
     //Editing Variables
     let setId = null;
     let setName = '';
@@ -24,6 +26,15 @@
             preVal + currVal.amount, 0);
 
     // Functions
+    function showForm(){
+       isFormOpen = true;
+    }
+    function hideForm(){
+       isFormOpen = false;
+       setId = null;
+       setName = '';
+       setAmount = null;
+    }
 
     function addExpense({name, amount}) {
         let newExpense = {
@@ -39,6 +50,7 @@
         setId = expense.id;
         setName = expense.name;
         setAmount = expense.amount;
+        showForm();
     }
 
     function editExpense({name, amount}){
@@ -48,6 +60,7 @@
                     name: name,
                     amount: amount}
                 : {...item};
+
         });
         setId = null;
         setName = '';
@@ -67,9 +80,14 @@
     setContext('modify',setModExpense )
 
 </script>
-<Navbar />
+<Navbar {showForm} />
 <main class="content">
-    <AddExpense {addExpense} name={setName} amount={setAmount} {isEditing} {editExpense} />
+    {#if isFormOpen}
+    <AddExpense {addExpense}
+                name={setName} amount={setAmount}
+                {isEditing} {editExpense} {hideForm}/>
+    {/if}
+
     <Total title="Total Expenses" { total }/>
     <ExpensesList {expenses} />
 
