@@ -6,6 +6,7 @@
     import ExpensesList from "./components/ExpensesList.svelte";
     import Total from "./components/Total.svelte";
     import AddExpense from "./components/AddExpense.svelte";
+    import Modal from "./components/Modal.svelte";
     // Data
     //import expensesData from "./expenses.js";
     //let expenses = [...expensesData];
@@ -21,8 +22,7 @@
     $: isEditing = !!setId;
 
 
-    console.log({expenses});
-        // sum values instantly
+    // sum values instantly
     $: total = expenses.reduce((preVal, currVal) =>
             preVal + currVal.amount, 0);
 
@@ -44,6 +44,7 @@
         amount: amount
         };
         expenses = [newExpense,...expenses];
+        hideForm();
     }
 
     function setModExpense(id){
@@ -66,6 +67,7 @@
         setId = null;
         setName = '';
         setAmount = null;
+        hideForm();
     }
 
     function removeExpense(id){
@@ -84,23 +86,26 @@
     function setLocalStorage() {
         localStorage.setItem('expenses',JSON.stringify(expenses));
     }
-            //lifecycle functions
+    //lifecycle functions
     onMount(() => {
        expenses = localStorage.getItem('expenses')
         ? JSON.parse(localStorage.getItem('expenses'))
         : [];
     });
     afterUpdate(() => {
-        console.log('updated');
+        console.log('status updated');
         setLocalStorage();
     });
 
+    //$: console.log({expenses});
 </script>
 <Navbar {showForm} />
 <main class="content">
     {#if isFormOpen}
-    <AddExpense {addExpense} name={setName} amount={setAmount}
-                {isEditing} {editExpense} {hideForm}/>
+        <Modal>
+            <AddExpense {addExpense} name={setName} amount={setAmount}
+            {isEditing} {editExpense} {hideForm}/>
+        </Modal>
     {/if}
 
     <Total title="Total Expenses" { total }/>
@@ -111,6 +116,4 @@
         Clear Expenses
     </button>
 </main>
-
-
 
