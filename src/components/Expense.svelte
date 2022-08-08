@@ -9,7 +9,7 @@
         displayAmount = !displayAmount
     }
     const removeExpense = getContext('remove');
-    const editExpense = getContext('edit');
+    const setModExpense = getContext('modify');
 
 </script>
 
@@ -29,7 +29,7 @@
             {/if}
     </div>
     <div class="expense-buttons">
-        <button class="expense-btn edit-btn" on:click = {editExpense(id)}>
+        <button class="expense-btn edit-btn" on:click = {setModExpense(id)}>
             <i class="fas fa-pen"></i>
         </button>
         <button class="expense-btn delete-btn" on:click = {removeExpense(id)}>

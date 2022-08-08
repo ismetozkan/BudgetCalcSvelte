@@ -2,7 +2,7 @@
     import {setContext} from 'svelte';
 
     // Components
-	import Navbar from "./components/Navbar.svelte";
+    import Navbar from "./components/Navbar.svelte";
     import ExpensesList from "./components/ExpensesList.svelte";
     import Total from "./components/Total.svelte";
     import AddExpense from "./components/AddExpense.svelte";
@@ -12,16 +12,19 @@
     // Variables
     let expenses = [...expensesData];
     //Editing Variables
-    let editId = null;
-    let editName = '';
-    let editAmount = null;
+    let setId = null;
+    let setName = '';
+    let setAmount = null;
+    $: isEditing = !!setId;
 
-    console.log(expenses);
+
+    console.log({expenses});
         // sum values instantly
     $: total = expenses.reduce((preVal, currVal) =>
             preVal + currVal.amount, 0);
 
     // Functions
+
     function addExpense({name, amount}) {
         let newExpense = {
         id: Math.random() * Date.now(),
@@ -31,15 +34,24 @@
         expenses = [newExpense,...expenses];
     }
 
-    function editExpense(id){
+    function setModExpense(id){
         let expense = expenses.find(item => item.id === id);
-            console.log(expense);
+        setId = expense.id;
+        setName = expense.name;
+        setAmount = expense.amount;
+    }
 
-        editId = expense.id;
-        editName = expense.name;
-        editAmount = expense.amount;
-
-        console.log({editId, editName, editAmount});
+    function editExpense({name, amount}){
+        expenses = expenses.map(item => {
+            return item.id === setId
+                ? {...item,
+                    name: name,
+                    amount: amount}
+                : {...item};
+        });
+        setId = null;
+        setName = '';
+        setAmount = null;
     }
 
     function removeExpense(id){
@@ -52,12 +64,12 @@
     }
     // Context
     setContext('remove',removeExpense )
-    setContext('edit',editExpense )
+    setContext('modify',setModExpense )
 
 </script>
 <Navbar />
 <main class="content">
-    <AddExpense {addExpense}/>
+    <AddExpense {addExpense} name={setName} amount={setAmount} {isEditing} {editExpense} />
     <Total title="Total Expenses" { total }/>
     <ExpensesList {expenses} />
 
