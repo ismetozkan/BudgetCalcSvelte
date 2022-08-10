@@ -10,7 +10,7 @@
         {#each expenses as expense}
             <Expense {...expense} />
         {:else}
-            <h1>There is no data</h1>
+            <h1>There is no expense to show</h1>
         {/each}
     </ul>
 </section>
