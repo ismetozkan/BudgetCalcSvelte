@@ -21,7 +21,6 @@
     let setAmount = null;
     $: isEditing = !!setId;
 
-
     // sum values instantly
     $: total = expenses.reduce((preVal, currVal) =>
             preVal + currVal.amount, 0);
@@ -58,9 +57,7 @@
     function editExpense({name, amount}){
         expenses = expenses.map(item => {
             return item.id === setId
-                ? {...item,
-                    name: name,
-                    amount: amount}
+                ? {...item, name, amount}
                 : {...item};
 
         });
@@ -76,7 +73,6 @@
 
     function clearExpenses(){
         expenses = [];
-        // todo: ADD PRESS & HOLD TO CLEAR EXPENSE BUTTON
     }
     // Context
     setContext('remove',removeExpense )
@@ -116,4 +112,3 @@
         Clear Expenses
     </button>
 </main>
-
